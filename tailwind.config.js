@@ -18,7 +18,9 @@ module.exports = {
       'white': '#FFFFFF',
       'gray': {
         '100': '#B7B7B7',
-        '200': '#828282'}
+        '200': '#828282'
+      },
+      'red': '#B33A3A'
   },
     extend: {},
   },
