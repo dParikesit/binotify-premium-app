@@ -15,7 +15,10 @@ module.exports = {
           '500': '#005F74',
           '600': '#2F4858'
       },
-      'white': '#FFFFFF'
+      'white': '#FFFFFF',
+      'gray': {
+        '100': '#B7B7B7',
+        '200': '#828282'}
   },
     extend: {},
   },

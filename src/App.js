@@ -1,12 +1,24 @@
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+import Login from "./pages/login";
+import Register from "./pages/register";
+
 
 function App() {
   return (
-    <div className="">
-        <h1 class="text-7xl font-bold underline">
-          Hello world!
-        </h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />}>
+        </Route>
+        <Route path="/register" element={<Register />}>
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
