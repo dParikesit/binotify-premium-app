@@ -1,5 +1,5 @@
 import Gambar from "../assets/spotify-text.png"
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 function Register() {
     const [nama, setNama] = React.useState('');
@@ -10,7 +10,7 @@ function Register() {
     const [isValidUsername, setIsValidUsername] = React.useState(true);
     const [isValidEmail, setIsValidEmail] = React.useState(true);
     const [isSamePassword, setIsSamePassword] = React.useState(true);
-    useEffect(() => {
+    React.useEffect(() => {
         if(/^\w+$/.test(username)) {
             setIsValidUsername(true);
         } else {
