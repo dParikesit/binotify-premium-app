@@ -8,6 +8,7 @@ import {
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Subscribe from "./pages/subscribe";
+import KelolaLagu from "./pages/kelola-lagu";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/subscribe" element={<Subscribe />} />
+        <Route path="/kelola-lagu" element={<KelolaLagu />} />
       </Routes>
     </Router>
   );
