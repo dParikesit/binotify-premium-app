@@ -51,44 +51,44 @@ function Register() {
         }
     }, [username, email, password, confirm_password]);
     return (
-        <section class="h-max overflow-y-auto bg-white">
-        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-            <a href="/" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-                <img class="w-max h-12 mr-2" src={Gambar} alt="logo" />
+        <section className="h-max overflow-y-auto bg-white">
+        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <a href="/" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+                <img className="w-max h-12 mr-2" src={Gambar} alt="logo" />
             </a>
-            <div class="w-full h-4/6 overflow-scroll bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:border-black">
-                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                    <h1 class="text-xl font-bold leading-tight tracking-tight md:text-2xl dark:text-black">
+            <div className="w-full h-4/6 overflow-scroll bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:border-black">
+                <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl dark:text-black">
                         Sign up to your account
                     </h1>
-                    <form class="space-y-4 md:space-y-6" action="#">
+                    <form className="space-y-4 md:space-y-6" action="#">
                         <div>
-                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">Name</label>
-                            <input onChange={(e) => setName(e.target.value)} type="text" name="name" id="name" class="bg-white border border-gray-200 text-gray-200 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="name" required="" />
-                            <p class="text-red-500 text-xs italic"></p>
+                            <label for="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">Name</label>
+                            <input onChange={(e) => setName(e.target.value)} type="text" name="name" id="name" className="bg-white border border-gray-200 text-gray-200 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="name" required="" />
+                            <p className="text-red-500 text-xs italic"></p>
                         </div>
                         <div>
-                            <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">Username</label>
-                            <input onChange={(e) => setUsername(e.target.value)} type="text" name="username" id="username" class="bg-white border border-gray-200 text-gray-200 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="username" required="" />
-                            {!isValidUsername && <p class="text-red text-xs italic">Username invalid.</p>}
+                            <label for="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">Username</label>
+                            <input onChange={(e) => setUsername(e.target.value)} type="text" name="username" id="username" className="bg-white border border-gray-200 text-gray-200 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="username" required="" />
+                            {!isValidUsername && <p className="text-red text-xs italic">Username invalid.</p>}
                         </div>
                         <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">Email</label>
-                            <input onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" class="bg-white border border-gray-200 text-gray-200 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="name@company.com" required="" />
-                            {!isValidEmail && <p class="text-red text-xs italic">Email invalid.</p>}
+                            <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">Email</label>
+                            <input onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" className="bg-white border border-gray-200 text-gray-200 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="name@company.com" required="" />
+                            {!isValidEmail && <p className="text-red text-xs italic">Email invalid.</p>}
                         </div>
                         <div>
-                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">Password</label>
-                            <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password" placeholder="" class="bg-white border border-gray-200 text-gray-200 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="" />
+                            <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">Password</label>
+                            <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password" placeholder="" className="bg-white border border-gray-200 text-gray-200 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="" />
                         </div>
                         <div>
-                            <label for="confirm_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">Confirm Password</label>
-                            <input onChange={(e) => setConfirmPassword(e.target.value)} type="password" name="confirm_password" id="confirm_password" placeholder="" class="bg-white border border-gray-200 text-gray-200 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="" />
-                            {!isSamePassword && <p class="text-red text-xs italic">Password is not same.</p>}
+                            <label for="confirm_password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">Confirm Password</label>
+                            <input onChange={(e) => setConfirmPassword(e.target.value)} type="password" name="confirm_password" id="confirm_password" placeholder="" className="bg-white border border-gray-200 text-gray-200 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="" />
+                            {!isSamePassword && <p className="text-red text-xs italic">Password is not same.</p>}
                         </div>
-                        <button disabled={(!isSamePassword || !isValidEmail || !isValidUsername) || password === '' || email === '' || name === '' || username === ''} type="submit" class="w-full text-black bg-green-100 enabled:hover:bg-white enabled:hover:text-green-100 enabled:hover:border enabled:hover:border-green-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:opacity-25" onClick={onSubmit}>Sign up</button>
-                        <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                            Already have an account? <a href="/" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign in</a>
+                        <button disabled={(!isSamePassword || !isValidEmail || !isValidUsername) || password === '' || email === '' || name === '' || username === ''} type="submit" className="w-full text-black bg-green-100 enabled:hover:bg-white enabled:hover:text-green-100 enabled:hover:border enabled:hover:border-green-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:opacity-25" onClick={onSubmit}>Sign up</button>
+                        <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                            Already have an account? <a href="/" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign in</a>
                         </p>
                     </form>
                 </div>
