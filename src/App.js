@@ -1,9 +1,8 @@
-import React from "react";
+import { useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
 } from "react-router-dom";
 import Login from "./pages/login";
 import Register from "./pages/register";
@@ -12,6 +11,9 @@ import KelolaLagu from "./pages/kelola-lagu";
 
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
   return (
     <Router>
       <Routes>
