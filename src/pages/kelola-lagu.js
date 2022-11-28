@@ -1,7 +1,11 @@
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import React from 'react';
 import Gambar from "../assets/binotify.png"
 
 function KelolaLagu() {
+    const navigate = useNavigate();
+
     const maxData = 5;
     const [index, setIndex] = React.useState(0);
     const [showData, setShowData] = React.useState(['','']);
@@ -23,11 +27,11 @@ function KelolaLagu() {
     function openModal(title, id) {
         setTempValue([title, id, ''])
         setIsOpen(true);
-      }
+    }
         
-      function closeModal() {
+    function closeModal() {
         setIsOpen(false);
-      }
+    }
 
     const changeIndex = (isNext) => {
         if(!isNext && index > 0) {
@@ -60,7 +64,12 @@ function KelolaLagu() {
     const onSubmitDelete = (id_pengguna) => {
         const id = id_pengguna;
         alert("DELETE")
+    }
 
+    const onLogout = () => {
+        Cookies.remove("isLoggedIn");
+        Cookies.remove("isAdmin");
+        return navigate("/login");
     }
 
     return(
@@ -70,7 +79,7 @@ function KelolaLagu() {
                     <img className="w-max h-16 mr-2" src={Gambar} alt="logo" />
                 </a>
                 <h1 classNameName='text-white text-2xl mt-4 text-center font-bold'>Halo! A</h1>
-                <button type="button" className="focus:outline-none h-12 my-2 border-2 border-red text-white bg-red hover:bg-black-200 hover:text-red focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">Log out</button>
+                <button type="button" className="focus:outline-none h-12 my-2 border-2 border-red text-white bg-red hover:bg-black-200 hover:text-red focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2" onClick={onLogout}>Log out</button>
             </div>
             <h1 classNameName="text-white text-3xl text-center mt-8 font-bold">Kelola Lagu</h1>
             <button onClick={() => {openModal('', ''); setIsEdit(false)}} type="button" className="ml-36 mt-8 focus:outline-none my-2 border-2 border-green-100 text-white bg-green-100 hover:text-green-100 hover:bg-black-200 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2">Add Song</button>

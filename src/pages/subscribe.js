@@ -1,10 +1,10 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import Gambar from "../assets/binotify.png"
 
 function Subscribe() {
     const maxData = 5;
-    const [index, setIndex] = React.useState(0);
-    const [showData, setShowData] = React.useState(['','']);
+    const [index, setIndex] = useState(0);
+    const [showData, setShowData] = useState(['','']);
     let data = [
         ['nama1','1'],
         ['nama2','2'],
@@ -26,7 +26,7 @@ function Subscribe() {
         }
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         setShowData(data.slice(index * maxData, index * maxData + maxData))
     }, [index])
     return(

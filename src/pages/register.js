@@ -25,8 +25,8 @@ function Register() {
             confirm_password: confirm_password
         })
         .then((response) => {
-            window.location.href = "/login";
-            navigate("/login")
+            window.location.href = "/";
+            navigate("/")
         }).catch((error) => {
             alert(error.response.data.message);
         });
