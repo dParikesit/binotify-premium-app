@@ -74,14 +74,14 @@ function KelolaLagu() {
 
     return(
         <div className="h-screen w-full overflow-x-auto bg-black-200 relative">
-            <div classNameName='flex flex-row justify-between mt-4 mx-12'>
+            <div className='flex flex-row justify-between mt-4 mx-12'>
                 <a href="/subscribe" className="flex items-center mb-6 text-2xl font-semibold text-white">
                     <img className="w-max h-16 mr-2" src={Gambar} alt="logo" />
                 </a>
-                <h1 classNameName='text-white text-2xl mt-4 text-center font-bold'>Halo! A</h1>
+                <h1 className='text-white text-2xl mt-4 text-center font-bold'>Halo! A</h1>
                 <button type="button" className="focus:outline-none h-12 my-2 border-2 border-red text-white bg-red hover:bg-black-200 hover:text-red focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2" onClick={onLogout}>Log out</button>
             </div>
-            <h1 classNameName="text-white text-3xl text-center mt-8 font-bold">Kelola Lagu</h1>
+            <h1 className="text-white text-3xl text-center mt-8 font-bold">Kelola Lagu</h1>
             <button onClick={() => {openModal('', ''); setIsEdit(false)}} type="button" className="ml-36 mt-8 focus:outline-none my-2 border-2 border-green-100 text-white bg-green-100 hover:text-green-100 hover:bg-black-200 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2">Add Song</button>
             <table className="w-10/12 mx-auto mt-2 bg-black-200 text-sm text-left text-white">
                 <thead className="text-xs text-gray-300 uppercase bg-gray-50 border-b">
@@ -119,7 +119,7 @@ function KelolaLagu() {
                     )})}
                 </tbody>
             </table>
-            <div classNameName="flex flex-row ml-32 mt-4">
+            <div className="flex flex-row ml-32 mt-4">
                 <a onClick={() => changeIndex(false)} className="block px-3 py-2 ml-0 leading-tight text-gray-300 bg-transparent border border-gray-300 rounded-l-lg hover:bg-white hover:text-black-200 hover:border-white">
                     <span className="sr-only">Previous</span>
                     <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
@@ -156,7 +156,7 @@ function KelolaLagu() {
                         <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">File</label>
                         <input onChange={(e) => setTempValue([tempValue[0], e.target.value])} type="file" name="file" id="file" className="bg-black-200 border border-green-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
                     </div>
-                    <button onClick={isEdit ? onSubmitEdit : onSubmitAdd} type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
+                    <button onClick={isEdit ? onSubmitEdit : onSubmitAdd} type="submit" className="w-full border-2 border-green-100 text-white bg-green-100 hover:bg-black-200 hover:border-2 hover:border-green-100 hover:text-green-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Save</button>
                 </form>
             </div>
         </div>
