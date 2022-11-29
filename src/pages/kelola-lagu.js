@@ -1,31 +1,39 @@
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import React from 'react';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 import Gambar from "../assets/binotify.png"
 
 function KelolaLagu() {
     const navigate = useNavigate();
 
     const maxData = 5;
-    const [index, setIndex] = React.useState(0);
-    const [showData, setShowData] = React.useState(['','']);
-    const [tempValue, setTempValue] = React.useState(['','','']);
-    const [modalIsOpen, setIsOpen] = React.useState(false);
-    const [isEdit, setIsEdit] = React.useState(true);
+    const [data, setData] = useState([]);
+    const [index, setIndex] = useState(0);
+    const [showData, setShowData] = useState([]);
+    const [tempValue, setTempValue] = useState([null,null,null]);
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const [isEdit, setIsEdit] = useState(true);
 
-    let data = [
-        ['nama1','1'],
-        ['nama2','2'],
-        ['nama3','2'],
-        ['nama4','2'],
-        ['nama5','2'],
-        ['nama6','2'],
-        ['nama7','2'],
-        ['nama8','2'],
-    ]
+    const fetchSongs = () => {
+        // to-do : get songs only by cookies.get('id') penyanyiid
+        axios.get('http://localhost:3002/api/songs', {
+            withCredentials: true
+        })
+        .then((response) => {
+            setData(response.data);
+        }).catch((error) => {
+            alert(error.response.data.message);
+        });
+    }
+        
 
-    function openModal(title, id) {
-        setTempValue([title, id, ''])
+    useEffect(() => {
+        fetchSongs();
+    }, [setData]);
+
+    function openModal(song_id, judul) {
+        setTempValue([song_id, judul, ''])
         setIsOpen(true);
     }
         
@@ -43,33 +51,62 @@ function KelolaLagu() {
         }
     }
 
-    React.useEffect(() => {
-        setShowData(data.slice(index * maxData, index * maxData + maxData))
-    }, [index])
+    // useEffect(() => {
+    //     setShowData(data.slice(index * maxData, index * maxData + maxData))
+    // }, [index, setShowData])
 
     // TODO: integrasi with backend
-    const onSubmitEdit = () => {
-        const judul = tempValue[0];
-        const id = tempValue[1];
-        const path = tempValue[2];
-        alert("EDIT")
+    const onSubmitEdit = (data) => {
+        axios(`http://localhost:3002/api/song/update/${data.target.value}`,
+        {
+            judul: tempValue[1],
+            audio_path: tempValue[2],
+        },
+        {
+            method: 'PUT',
+            withCredentials: true
+        })
+        .then((response) => {
+            alert(response.data.message);
+            fetchSongs();
+        }).catch((error) => {
+            alert(error.response.data.message);
+        });
     }
 
     const onSubmitAdd = () => {
-        const judul = tempValue[0];
-        const path = tempValue[2];
-        alert("ADD")
+        const formData = new FormData();
+        formData.append('judul', tempValue[1]);
+        formData.append('audio_path', tempValue[2]);
+        formData.append('penyanyi_id', Cookies.get('id'));
+        axios.post(`http://localhost:3002/api/song/create`, formData, { withCredentials: true })
+        .then((response) => {
+            alert(response.data.message);
+            fetchSongs();
+        }).catch((error) => {
+            alert(error.response.data.message);
+        });
     }
 
-    const onSubmitDelete = (id_pengguna) => {
-        const id = id_pengguna;
-        alert("DELETE")
+    const onSubmitDelete = (data) => {
+        axios(`http://localhost:3002/api/song/delete/${data.target.value}`, {
+            method: 'POST',
+            withCredentials: true
+        })
+        .then((response) => {
+            alert(response.data.message);
+            fetchSongs();
+        }).catch((error) => {
+            alert(error.response.data.message);
+        });
     }
 
     const onLogout = () => {
-        Cookies.remove("isLoggedIn");
-        Cookies.remove("isAdmin");
-        return navigate("/login");
+        Cookies.remove('access_token');
+        Cookies.remove('isAdmin');
+        Cookies.remove('id');
+        Cookies.remove('username');
+        return navigate("/");
     }
 
     return(
@@ -78,7 +115,7 @@ function KelolaLagu() {
                 <a href="/subscribe" className="flex items-center mb-6 text-2xl font-semibold text-white">
                     <img className="w-max h-16 mr-2" src={Gambar} alt="logo" />
                 </a>
-                <h1 className='text-white text-2xl mt-4 text-center font-bold'>Halo! A</h1>
+                <h1 className='text-white text-2xl mt-4 text-center font-bold'>Halo! {Cookies.get("username")}</h1>
                 <button type="button" className="focus:outline-none h-12 my-2 border-2 border-red text-white bg-red hover:bg-black-200 hover:text-red focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2" onClick={onLogout}>Log out</button>
             </div>
             <h1 className="text-white text-3xl text-center mt-8 font-bold">Kelola Lagu</h1>
@@ -87,7 +124,7 @@ function KelolaLagu() {
                 <thead className="text-xs text-gray-300 uppercase bg-gray-50 border-b">
                     <tr>
                         <th scope="col" className="py-3 px-6">
-                            #
+                            Id
                         </th>
                         <th scope="col" className="py-3 px-6">
                             Judul
@@ -101,19 +138,19 @@ function KelolaLagu() {
                     </tr>
                 </thead>
                 <tbody>
-                    {showData && showData.map((d, i) => {return(
+                    {data && data.map((row, i) => {return(
                         <tr className="cursor-default bg-black-200" key={i}>
                             <th scope="row" className="py-4 px-6 font-medium text-gray-300 whitespace-nowrap">
-                                {i + index * maxData + 1}
+                                {row.song_id}
                             </th>
                             <th scope="row" className="py-4 px-6 font-medium text-white whitespace-nowrap">
-                                {d[0]}
+                                {row.judul}
                             </th>
                             <td>
-                                <button onClick={() => {openModal(d[0], d[1]); setIsEdit(true)}} data-modal-toggle="authentication-modal" type="button" className="focus:outline-none my-2 border-2 border-green-100 text-white bg-green-100 hover:text-green-100 hover:bg-black-200 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2">Edit</button>
+                                <button onClick={() => {openModal(row.song_id, row.judul); setIsEdit(true)}} data-modal-toggle="authentication-modal" type="button" className="focus:outline-none my-2 border-2 border-green-100 text-white bg-green-100 hover:text-green-100 hover:bg-black-200 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2">Edit</button>
                             </td>
                             <td>
-                                <button onClick={() => onSubmitDelete(d[1])} type="button" className="focus:outline-none my-2 border-2 border-red text-white bg-red hover:bg-black-200 hover:text-red focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2">Delete</button>
+                                <button onClick={onSubmitDelete} value={row.song_id} type="button" className="focus:outline-none my-2 border-2 border-red text-white bg-red hover:bg-black-200 hover:text-red focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2">Delete</button>
                             </td>
                         </tr>
                     )})}
@@ -150,13 +187,13 @@ function KelolaLagu() {
                 <form className="space-y-6" action="#">
                     <div>
                         <label for="title" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-                        <input onChange={(e) => setTempValue([e.target.value, tempValue[2]])}  value={tempValue[0]} type="title" name="title" id="title" className="bg-black-200 border border-green-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="add title" required />
+                        <input onChange={(e) => setTempValue(['', e.target.value, tempValue[2]])}  value={tempValue[1]} type="title" name="title" id="title" className="bg-black-200 border border-green-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="add title" required />
                     </div>
                     <div>
-                        <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">File</label>
-                        <input onChange={(e) => setTempValue([tempValue[0], e.target.value])} type="file" name="file" id="file" className="bg-black-200 border border-green-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                        <label for="file" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Audio File</label>
+                        <input onChange={(e) => setTempValue(['', tempValue[1], e.target.files[0]])} type="file" name="audio_path" id="audio_path" className="bg-black-200 border border-green-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
                     </div>
-                    <button onClick={isEdit ? onSubmitEdit : onSubmitAdd} type="submit" className="w-full border-2 border-green-100 text-white bg-green-100 hover:bg-black-200 hover:border-2 hover:border-green-100 hover:text-green-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Save</button>
+                    <button onClick={isEdit ? onSubmitEdit : onSubmitAdd} value={isEdit ? tempValue[0] : null} type="submit" className="w-full border-2 border-green-100 text-white bg-green-100 hover:bg-black-200 hover:border-2 hover:border-green-100 hover:text-green-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Save</button>
                 </form>
             </div>
         </div>

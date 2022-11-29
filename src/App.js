@@ -12,11 +12,11 @@ import KelolaLagu from "./pages/kelola-lagu";
 
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const isLoggedIn = Cookies.get("isLoggedIn");
+    const isLoggedIn = Cookies.get("access_token");
     const isAdmin = Cookies.get("isAdmin");
     if (isLoggedIn) {
       setIsLoggedIn(true);

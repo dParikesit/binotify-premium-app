@@ -11,13 +11,16 @@ function Login() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3001/api/login', {
+        axios.post('http://localhost:3002/api/login', {
             username: username,
             password: password
         })
         .then((response) => {
-            Cookies.set('isLoggedIn', true);
+            Cookies.set('access_token', response.data.accessToken);
             Cookies.set('isAdmin', response.data.isAdmin);
+            Cookies.set('id', response.data.id);
+            Cookies.set('username', response.data.username);
+            window.location.href = "/kelola-lagu";
             navigate("/kelola-lagu");
         }).catch((error) => {
             alert(error.response.data.message);
@@ -37,8 +40,8 @@ function Login() {
                     </h1>
                     <form className="space-y-4 md:space-y-6" action="#">
                         <div>
-                            <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">Your email</label>
-                            <input onChange={(e) => setUsername(e.target.value)} type="email" name="email" id="email" className="bg-white border border-gray-200 text-gray-200 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="name@company.com" required="" />
+                            <label for="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">Username</label>
+                            <input onChange={(e) => setUsername(e.target.value)} type="username" name="username" id="username" className="bg-white border border-gray-200 text-gray-200 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="username" required="" />
                         </div>
                         <div>
                             <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">Password</label>

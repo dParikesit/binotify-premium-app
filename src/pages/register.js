@@ -17,7 +17,7 @@ function Register() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3001/api/register', {
+        axios.post('http://localhost:3002/api/register', {
             name: name,
             username: username,
             email: email,
@@ -28,7 +28,7 @@ function Register() {
             window.location.href = "/";
             navigate("/")
         }).catch((error) => {
-            alert(error.response.data.message);
+            alert(error.response.message);
         });
     }
 
