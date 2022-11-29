@@ -16,8 +16,7 @@ function KelolaLagu() {
     const [isEdit, setIsEdit] = useState(true);
 
     const fetchSongs = () => {
-        // to-do : get songs only by cookies.get('id') penyanyiid
-        axios.get('http://localhost:3002/api/songs', {
+        axios.get(`http://localhost:3002/api/songs/penyanyi/${Cookies.get("id")}`, {
             withCredentials: true
         })
         .then((response) => {
