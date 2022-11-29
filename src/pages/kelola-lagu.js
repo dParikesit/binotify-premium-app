@@ -55,17 +55,11 @@ function KelolaLagu() {
     //     setShowData(data.slice(index * maxData, index * maxData + maxData))
     // }, [index, setShowData])
 
-    // TODO: integrasi with backend
     const onSubmitEdit = (data) => {
-        axios(`http://localhost:3002/api/song/update/${data.target.value}`,
-        {
-            judul: tempValue[1],
-            audio_path: tempValue[2],
-        },
-        {
-            method: 'PUT',
-            withCredentials: true
-        })
+        const formData = new FormData();
+        formData.append('judul', tempValue[1]);
+        formData.append('audio_path', tempValue[2]);
+        axios.put(`http://localhost:3002/api/song/update/${data.target.value}`, formData, { withCredentials: true })
         .then((response) => {
             alert(response.data.message);
             fetchSongs();
@@ -187,11 +181,11 @@ function KelolaLagu() {
                 <form className="space-y-6" action="#">
                     <div>
                         <label for="title" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-                        <input onChange={(e) => setTempValue(['', e.target.value, tempValue[2]])}  value={tempValue[1]} type="title" name="title" id="title" className="bg-black-200 border border-green-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="add title" required />
+                        <input onChange={(e) => setTempValue([tempValue[0], e.target.value, tempValue[2]])}  value={tempValue[1]} type="title" name="title" id="title" className="bg-black-200 border border-green-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="add title" required />
                     </div>
                     <div>
                         <label for="file" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Audio File</label>
-                        <input onChange={(e) => setTempValue(['', tempValue[1], e.target.files[0]])} type="file" name="audio_path" id="audio_path" className="bg-black-200 border border-green-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                        <input onChange={(e) => setTempValue([tempValue[0], tempValue[1], e.target.files[0]])} type="file" name="audio_path" id="audio_path" className="bg-black-200 border border-green-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required={!isEdit}/>
                     </div>
                     <button onClick={isEdit ? onSubmitEdit : onSubmitAdd} value={isEdit ? tempValue[0] : null} type="submit" className="w-full border-2 border-green-100 text-white bg-green-100 hover:bg-black-200 hover:border-2 hover:border-green-100 hover:text-green-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Save</button>
                 </form>
