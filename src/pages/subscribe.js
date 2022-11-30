@@ -34,6 +34,38 @@ function Subscribe() {
         setShowData(data.slice(index * maxData, index * maxData + maxData))
     }, [index])
 
+    const onAccept = (e, reqData) => {
+        e.preventDefault();
+        axios.put('http://localhost:3002/api/subs/accept', {
+            creator_id: reqData.creator_id,
+            subscriber_id: reqData.subscriber_id
+        })
+        .then((response) => {
+            alert(response.data);
+            setData(data.filter((item) => item !== reqData));
+            window.location.reload();
+        }).catch((error) => {
+            alert(error.response.data.message);
+        });
+    };
+
+    const onReject = (e, reqData) => {
+      e.preventDefault();
+      axios
+        .put("http://localhost:3002/api/subs/reject", {
+            creator_id: reqData.creator_id,
+            subscriber_id: reqData.subscriber_id,
+        })
+        .then((response) => {
+            alert(response.data);
+            setData(data.filter((item) => item !== reqData));
+            window.location.reload()
+        })
+        .catch((error) => {
+            alert(error.response.data.message);
+        });
+    };
+    
     return(
         <div className="h-screen w-full overflow-x-auto bg-black-200 relative">
             <div classNameName='flex flex-row justify-between mt-4 mx-12'>
