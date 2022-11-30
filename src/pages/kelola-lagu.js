@@ -21,6 +21,7 @@ function KelolaLagu() {
         })
         .then((response) => {
             setData(response.data);
+            setShowData(response.data.slice(index * maxData, index * maxData + maxData))
         }).catch((error) => {
             alert(error.response.data.message);
         });
@@ -29,7 +30,7 @@ function KelolaLagu() {
 
     useEffect(() => {
         fetchSongs();
-    }, [setData]);
+    }, [setData, index]);
 
     function openModal(song_id, judul) {
         setTempValue([song_id, judul, ''])
@@ -42,11 +43,11 @@ function KelolaLagu() {
 
     const changeIndex = (isNext) => {
         if(!isNext && index > 0) {
-            setIndex(index - 1);
+            setIndex(index - 1).then(() => setShowData(data.slice(index * maxData, index * maxData + maxData)));
         } else if (isNext && data.length % maxData == 0 && data.length / maxData != index + 1) {
-            setIndex(index + 1);
+            setIndex(index + 1).then(() => setShowData(data.slice(index * maxData, index * maxData + maxData)));
         } else if (isNext && Math.ceil(data.length / maxData) - 1 >= index + 1) {
-            setIndex(index + 1);
+            setIndex(index + 1).then(() => setShowData(data.slice(index * maxData, index * maxData + maxData)));
         }
     }
 
@@ -131,7 +132,7 @@ function KelolaLagu() {
                     </tr>
                 </thead>
                 <tbody>
-                    {data && data.map((row, i) => {return(
+                    {showData && showData.map((row, i) => {return(
                         <tr className="cursor-default bg-black-200" key={i}>
                             <th scope="row" className="py-4 px-6 font-medium text-gray-300 whitespace-nowrap">
                                 {row.song_id}
