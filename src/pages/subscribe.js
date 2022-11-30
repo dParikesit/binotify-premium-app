@@ -1,20 +1,12 @@
 import { useState, useEffect } from 'react';
 import Gambar from "../assets/binotify.png"
+import axios from "axios";
 
 function Subscribe() {
     const maxData = 5;
     const [index, setIndex] = useState(0);
-    const [showData, setShowData] = useState(['','']);
-    let data = [
-        ['nama1','1'],
-        ['nama2','2'],
-        ['nama3','2'],
-        ['nama4','2'],
-        ['nama5','2'],
-        ['nama6','2'],
-        ['nama7','2'],
-        ['nama8','2'],
-    ]
+    const [showData, setShowData] = useState([]);
+    const [data, setData] = useState([])
 
     const changeIndex = (isNext) => {
         if(!isNext && index > 0) {
@@ -27,8 +19,21 @@ function Subscribe() {
     }
 
     useEffect(() => {
+      axios
+        .get("http://localhost:3002/api/subs/pending")
+        .then((response) => {
+          setData(response.data);
+          setShowData(response.data.slice(index * maxData, index * maxData + maxData));
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    }, []);
+
+    useEffect(() => {
         setShowData(data.slice(index * maxData, index * maxData + maxData))
     }, [index])
+
     return(
         <div className="h-screen w-full overflow-x-auto bg-black-200 relative">
             <div classNameName='flex flex-row justify-between mt-4 mx-12'>
@@ -45,7 +50,10 @@ function Subscribe() {
                             #
                         </th>
                         <th scope="col" className="py-3 px-6">
-                            Name
+                            Creator Name
+                        </th>
+                        <th scope="col" className="py-3 px-6">
+                            Subscriber Id
                         </th>
                         <th scope="col" className="py-3 px-6">
                             <span className="sr-only">Edit</span>
@@ -62,13 +70,16 @@ function Subscribe() {
                                 {i + index * maxData + 1}
                             </th>
                             <th scope="row" className="py-4 px-6 font-medium text-white whitespace-nowrap">
-                                {d[0]}
+                                {d["creator_name"]}
+                            </th>
+                            <th scope="row" className="py-4 px-6 font-medium text-white whitespace-nowrap">
+                                {d["subscriber_id"]}
                             </th>
                             <td>
-                                <button type="button" className="focus:outline-none my-2 border-2 border-green-100 text-white bg-green-100 hover:text-green-100 hover:bg-black-200 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2">Accept</button>
+                                <button onClick={(e) => onAccept(e,d)} type="button" className="focus:outline-none my-2 border-2 border-green-100 text-white bg-green-100 hover:text-green-100 hover:bg-black-200 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2">Accept</button>
                             </td>
                             <td>
-                                <button type="button" className="focus:outline-none my-2 border-2 border-red text-white bg-red hover:bg-black-200 hover:text-red focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2">Reject</button>
+                                <button onClick={(e) => onReject(e,d)} type="button" className="focus:outline-none my-2 border-2 border-red text-white bg-red hover:bg-black-200 hover:text-red focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2">Reject</button>
                             </td>
                         </tr>
                     )})}
