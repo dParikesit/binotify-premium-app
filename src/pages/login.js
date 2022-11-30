@@ -9,10 +9,10 @@ function Login() {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    Cookies.remove("access_token");
-    Cookies.remove("isAdmin");
-    Cookies.remove("id");
-    Cookies.remove("username");
+    // Cookies.remove("access_token");
+    // Cookies.remove("isAdmin");
+    // Cookies.remove("id");
+    // Cookies.remove("username");
 
     const onSubmit = (e) => {
         e.preventDefault();
