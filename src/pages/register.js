@@ -2,6 +2,7 @@ import Gambar from "../assets/spotify-text.png"
 import {useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import Cookies from "js-cookie";
 
 function Register() {
     const navigate = useNavigate();
@@ -15,6 +16,11 @@ function Register() {
     const [isValidEmail, setIsValidEmail] = useState(true);
     const [isSamePassword, setIsSamePassword] = useState(true);
 
+    Cookies.remove("access_token");
+    Cookies.remove("isAdmin");
+    Cookies.remove("id");
+    Cookies.remove("username");
+
     const onSubmit = (e) => {
         e.preventDefault();
         axios.post('http://localhost:3002/api/register', {
@@ -25,8 +31,9 @@ function Register() {
             confirm_password: confirm_password
         })
         .then((response) => {
-            window.location.href = "/";
             navigate("/")
+            window.location.href("/")
+            window.location.reload()
         }).catch((error) => {
             alert(error.response.message);
         });

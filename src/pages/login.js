@@ -9,6 +9,11 @@ function Login() {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
+    Cookies.remove("access_token");
+    Cookies.remove("isAdmin");
+    Cookies.remove("id");
+    Cookies.remove("username");
+
     const onSubmit = (e) => {
         e.preventDefault();
         axios.post('http://localhost:3002/api/login', {
@@ -20,8 +25,15 @@ function Login() {
             Cookies.set('isAdmin', response.data.isAdmin);
             Cookies.set('id', response.data.id);
             Cookies.set('username', response.data.username);
-            window.location.href = "/kelola-lagu";
-            navigate("/kelola-lagu");
+            if (response.data.isAdmin) {
+                navigate('/subscribe', {replace: true});              
+                window.location.href("/subscribe");
+                window.location.reload()
+            } else {
+                navigate("/kelola-lagu");
+                window.location.href("/kelola-lagu");
+                window.location.reload();
+            }
         }).catch((error) => {
             alert(error.response.data.message);
         });
