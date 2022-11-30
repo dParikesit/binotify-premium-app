@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import Gambar from "../assets/binotify.png"
 import axios from "axios";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 function Subscribe() {
+    const navigate = useNavigate();
     const maxData = 5;
     const [index, setIndex] = useState(0);
     const [showData, setShowData] = useState([]);
@@ -20,10 +23,14 @@ function Subscribe() {
 
     useEffect(() => {
       axios
-        .get("http://localhost:3002/api/subs/pending")
+        .get("http://localhost:3002/api/subs/pending", {
+          withCredentials: true,
+        })
         .then((response) => {
           setData(response.data);
-          setShowData(response.data.slice(index * maxData, index * maxData + maxData));
+          setShowData(
+            response.data.slice(index * maxData, index * maxData + maxData)
+          );
         })
         .catch((error) => {
           alert(error.message);
@@ -36,34 +43,56 @@ function Subscribe() {
 
     const onAccept = (e, reqData) => {
         e.preventDefault();
-        axios.put('http://localhost:3002/api/subs/accept', {
-            creator_id: reqData.creator_id,
-            subscriber_id: reqData.subscriber_id
-        })
-        .then((response) => {
+        axios
+          .put(
+            "http://localhost:3002/api/subs/accept",
+            {
+              creator_id: reqData.creator_id,
+              subscriber_id: reqData.subscriber_id,
+            },
+            {
+              withCredentials: true,
+            }
+          )
+          .then((response) => {
             alert(response.data);
             setData(data.filter((item) => item !== reqData));
             window.location.reload();
-        }).catch((error) => {
+          })
+          .catch((error) => {
             alert(error.response.data.message);
-        });
+          });
     };
 
     const onReject = (e, reqData) => {
       e.preventDefault();
       axios
-        .put("http://localhost:3002/api/subs/reject", {
+        .put(
+          "http://localhost:3002/api/subs/reject",
+          {
             creator_id: reqData.creator_id,
             subscriber_id: reqData.subscriber_id,
-        })
+          },
+          {
+            withCredentials: true,
+          }
+        )
         .then((response) => {
-            alert(response.data);
-            setData(data.filter((item) => item !== reqData));
-            window.location.reload()
+          alert(response.data);
+          setData(data.filter((item) => item !== reqData));
+          window.location.reload();
         })
         .catch((error) => {
-            alert(error.response.data.message);
+          alert(error.response.data.message);
         });
+    };
+
+    const onLogout = () => {
+      Cookies.remove("access_token");
+      Cookies.remove("isAdmin");
+      Cookies.remove("id");
+      Cookies.remove("username");
+      return navigate("/");
     };
     
     return(
@@ -72,7 +101,7 @@ function Subscribe() {
                 <a href="/subscribe" className="flex items-center mb-6 text-2xl font-semibold text-white">
                     <img className="w-max h-16 mr-2" src={Gambar} alt="logo" />
                 </a>
-                <button type="button" className="focus:outline-none h-12 my-2 border-2 border-red text-white bg-red hover:bg-black-200 hover:text-red focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">Log out</button>
+                <button onClick={onLogout} type="button" className="focus:outline-none h-12 my-2 border-2 border-red text-white bg-red hover:bg-black-200 hover:text-red focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">Log out</button>
             </div>
             <h1 classNameName="text-white text-3xl text-center mt-8 font-bold">Daftar Request User</h1>
             <table className="w-10/12 mx-auto mt-4 bg-black-200 text-sm text-left text-white">
