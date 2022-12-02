@@ -25,6 +25,7 @@ npm start
 ## Screenshots
 perlu diisi!!!!!!!
 
+
 ## Route
 ```
 URL : `http://localhost:3001/`
@@ -49,7 +50,7 @@ List Subscription | 13520057
 Integrasi | NIM
 --- | ---
 List Song | 13520058
-List Penyanyi | 13520087
+List Penyanyi | 13520087 13520057
 Login| 13520058
 Register | 13520058
 Song Management | 13520087
