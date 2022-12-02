@@ -23,8 +23,18 @@ npm start
 ```
 
 ## Screenshots
-perlu diisi!!!!!!!
-
+Login Page
+![Login Page](/screenshot/login.jpg)
+Register Page
+![Register Page](/screenshot/admin.jpg)
+Admin Subscribe Page
+![Admin Subscribe Page](/screenshot/admin.jpg)
+List Song Page
+![List Song Page](/screenshot/listlagu.jpg)
+Add Song Page
+![Add Song Page](/screenshot/tambahlagu.jpg)
+Edit Song Page
+![Edit Song Page](/screenshot/editlagu.jpg)
 
 ## Route
 ```
