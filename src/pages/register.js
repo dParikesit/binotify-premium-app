@@ -35,7 +35,7 @@ function Register() {
             window.location.href("/")
             window.location.reload()
         }).catch((error) => {
-            alert(error.response.message);
+            alert(error.response.data.message);
         });
     }
 
