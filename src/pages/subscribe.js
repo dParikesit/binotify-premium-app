@@ -97,13 +97,13 @@ function Subscribe() {
     
     return(
         <div className="h-screen w-full overflow-x-auto bg-black-200 relative">
-            <div classNameName='flex flex-row justify-between mt-4 mx-12'>
+            <div className='flex flex-row justify-between mt-4 mx-12'>
                 <a href="/subscribe" className="flex items-center mb-6 text-2xl font-semibold text-white">
                     <img className="w-max h-16 mr-2" src={Gambar} alt="logo" />
                 </a>
                 <button onClick={onLogout} type="button" className="focus:outline-none h-12 my-2 border-2 border-red text-white bg-red hover:bg-black-200 hover:text-red focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">Log out</button>
             </div>
-            <h1 classNameName="text-white text-3xl text-center mt-8 font-bold">Daftar Request User</h1>
+            <h1 className="text-white text-3xl text-center mt-8 font-bold">Daftar Request User</h1>
             <table className="w-10/12 mx-auto mt-4 bg-black-200 text-sm text-left text-white">
                 <thead className="text-xs text-gray-300 uppercase bg-gray-50 border-b">
                     <tr>
@@ -146,7 +146,7 @@ function Subscribe() {
                     )})}
                 </tbody>
             </table>
-            <div classNameName="flex flex-row ml-32 mt-4">
+            <div className="flex flex-row ml-32 mt-4">
                 <a onClick={() => changeIndex(false)} className="block px-3 py-2 ml-0 leading-tight text-gray-300 bg-transparent border border-gray-300 rounded-l-lg hover:bg-white hover:text-black-200 hover:border-white">
                     <span className="sr-only">Previous</span>
                     <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
