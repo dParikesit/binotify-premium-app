@@ -15,6 +15,7 @@ function Login() {
   // Cookies.remove("username");
 
   const onSubmit = (e) => {
+    e.preventDefault();
     axios
       .post("http://localhost:3002/api/login", {
         username: username,
@@ -27,7 +28,7 @@ function Login() {
         Cookies.set("username", response.data.username);
         if (response.data.isAdmin) {
           navigate("/subscribe", { replace: true });
-          window.location.href("/subscribe");
+          window.location.href = "/subscribe";
           window.location.reload();
         } else {
           navigate("/kelola-lagu");
